@@ -3,7 +3,9 @@ This repository contains lab reports written to summarize mini projects complete
 
 ## Labs
 **Lab1:** Mutations and Mechanisms of Ampicillin Resistant E. Coli: A Sequence Analysis Investigation
+
 **Lab2:** Molecular Investigator: Deep Sequencing Variant Identification for Classifying Mutations in Flu Virus Allowing for Transmission to Vaccinated Hosts
+
 **Lab3:** De Novo Assembly Pipeline: Building Staphylococcus Genome from Short Reads
 
 ## Skills Covered
