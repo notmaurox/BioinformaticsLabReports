@@ -26,4 +26,9 @@ This repository contains lab reports written to summarize mini projects complete
 - scaffolding (Lab3)
 - assembly evaluation (Lab3)
 - plotting (Lab3)
+- genome browsers and data visualization (Lab4)
+- RNA-seq analysis (Lab4)
+- accessing public databases (Lab4)
+- epigenomics (Lab4)
+- multiple sequence alignment
 
