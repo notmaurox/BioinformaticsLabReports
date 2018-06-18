@@ -1,5 +1,5 @@
 # BioinformaticsLabReports
-This repository contains lab reports written to summarize mini projects completed in my senior year advanced bioinformatics lab course at University of California San Diego. 
+This repository contains lab reports written to summarize mini projects completed in my senior year advanced bioinformatics lab course at University of California San Diego in which I received an A+.
 
 ## Labs
 **Lab1:** Mutations and Mechanisms of Ampicillin Resistant E. Coli: A Sequence Analysis Investigation
