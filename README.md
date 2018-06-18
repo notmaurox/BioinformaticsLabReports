@@ -10,6 +10,8 @@ This repository contains lab reports written to summarize mini projects complete
 
 **Lab4:** Investigation of Developmental and Shh Gene Regulatory Regions: A Differential Expression Analysis of RNA+ChIP-Sequencing Data
 
+**Lab5:** Can Reading Ones Genome Provide Information On Who They Are: An Investigation of Eye Color Using GWAS and Mathematical Modeling.
+
 ## Skills Covered
 - UNIX navigation (Lab1)
 - Github (Lab1)
@@ -30,5 +32,8 @@ This repository contains lab reports written to summarize mini projects complete
 - RNA-seq analysis (Lab4)
 - accessing public databases (Lab4)
 - epigenomics (Lab4)
-- multiple sequence alignment
+- multiple sequence alignment (Lab4)
+- GWAS (Lab5)
+- plink (Lab5)
+- Trait prediction (Lab5)
 
