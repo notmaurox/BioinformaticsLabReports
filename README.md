@@ -8,6 +8,8 @@ This repository contains lab reports written to summarize mini projects complete
 
 **Lab3:** De Novo Assembly Pipeline: Building Staphylococcus Genome from Short Reads
 
+**Lab4:** Investigation of Developmental and Shh Gene Regulatory Regions: A Differential Expression Analysis of RNA+ChIP-Sequencing Data
+
 ## Skills Covered
 - UNIX navigation (Lab1)
 - Github (Lab1)
