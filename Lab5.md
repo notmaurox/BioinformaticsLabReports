@@ -26,6 +26,30 @@ Plink version v1.90b5.4 was used with `--pca 10` flag to complete Principal Comp
 ### Eye color prediction
 Eye color prediction on the second data set was completed using a Google spreadsheet. Each sample was loaded in as a row with ID, population label, and genotype for each SNP listed in separate columns. The following 6 columns counted the minor alleles the individual carried, and the next 4 completed calculations. The first calculation completed the sum of the product of beta1’s and associated minor allele count, the second being the same except using beta2’s. The third and fourth computed e raised to the power of alpha1+first calculation column and e raised to alpha2+second calculation column. These pieces allowed for the first 3 columns of each row to combine these calculations in order to generate probability blue/other/brown eye color, with the 4th reporting the color with highest probability. To interpret the function of these 6 variants, UCSC Genome Browser was used to view human reference genome hg19 with ENCODE histone modification, Integrated Regulation from ENCODE, and Expression QTLs in 44 tissues from GTEx tracks shown [3]. Findings from SNP interpretation verified by checking snpedia.com database [4]
 
+*Model used was from the [IrisPlex paper](https://www.ncbi.nlm.nih.gov/pubmed/20457092) and the following description of the model was provided by Professor Gymrek in the Lab assignment document*
+
+The IrisPlex paper has fit the following two models, which can be thought of as performing two separate case control analyses: one of blue vs. brown, and the second of other vs. brown.
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\ln(p_{blue}/p_{brown})&space;=&space;\alpha_1&space;&plus;&space;\sum_{k}\beta_{1,&space;k}X_k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ln(p_{blue}/p_{brown})&space;=&space;\alpha_1&space;&plus;&space;\sum_{k}\beta_{1,&space;k}X_k" title="\ln(p_{blue}/p_{brown}) = \alpha_1 + \sum_{k}\beta_{1, k}X_k" /></a>
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=\ln(p_{other}/p_{brown})&space;=&space;\alpha_2&space;&plus;&space;\sum_{k}\beta_{2,&space;k}X_k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\ln(p_{other}/p_{brown})&space;=&space;\alpha_2&space;&plus;&space;\sum_{k}\beta_{2,&space;k}X_k" title="\ln(p_{other}/p_{brown}) = \alpha_2 + \sum_{k}\beta_{2, k}X_k" /></a>
+
+where <a href="https://www.codecogs.com/eqnedit.php?latex=\alpha_i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\alpha_i" title="\alpha_i" /></a>
+is the intercept term for model
+<a href="https://www.codecogs.com/eqnedit.php?latex=i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?i" title="i" /></a>, 
+<a href="https://www.codecogs.com/eqnedit.php?latex=\beta_{i,k}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\beta_{i,k}" title="\beta_{i,k}" /></a>
+is the effect size for model 
+<a href="https://www.codecogs.com/eqnedit.php?latex=i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?i" title="i" /></a> 
+at the 
+<a href="https://www.codecogs.com/eqnedit.php?latex=i" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a>
+th SNP, and 
+<a href="https://www.codecogs.com/eqnedit.php?latex=X_k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?X_k" title="X_k" /></a> 
+is the number of minor alleles at an individual's genotype for the <a href="https://www.codecogs.com/eqnedit.php?latex=k" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k" title="k" /></a>th SNP (0, 1, or 2). 
+
+We can rearrange this model to predict the probability of each eye color for a given individual:
+
+<a href="https://www.codecogs.com/eqnedit.php?latex=p_{blue}&space;=&space;\frac{e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}}{1&plus;e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}&plus;e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}&space;\\\\&space;p_{other}&space;=&space;\frac{e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}{1&plus;e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}&plus;e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}&space;\\\\&space;p_{brown}&space;=&space;1-p_{blue}-p_{other}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?p_{blue}&space;=&space;\frac{e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}}{1&plus;e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}&plus;e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}&space;\\\\&space;p_{other}&space;=&space;\frac{e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}{1&plus;e^{\alpha_1&space;&plus;&space;\sum_k&space;\beta_{1,k}X_k}&plus;e^{\alpha_2&space;&plus;&space;\sum_k&space;\beta_{2,k}X_k}}&space;\\\\&space;p_{brown}&space;=&space;1-p_{blue}-p_{other}" title="p_{blue} = \frac{e^{\alpha_1 + \sum_k \beta_{1,k}X_k}}{1+e^{\alpha_1 + \sum_k \beta_{1,k}X_k}+e^{\alpha_2 + \sum_k \beta_{2,k}X_k}} \\\\ p_{other} = \frac{e^{\alpha_2 + \sum_k \beta_{2,k}X_k}}{1+e^{\alpha_1 + \sum_k \beta_{1,k}X_k}+e^{\alpha_2 + \sum_k \beta_{2,k}X_k}} \\\\ p_{brown} = 1-p_{blue}-p_{other}" /></a> 
+
 ## Results
 
 ### GWAS
