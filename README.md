@@ -14,6 +14,8 @@ This repository contains lab reports written to summarize mini projects complete
 
 **Lab6:** See worksheet for some answers to questions about the lab. This week didn't include a formal report.
 
+**Lab7 / Independent Project:** Kakapo Mitogenome Analysis For SNP Identification: Investigating Potential Markers of Diversity Within Modern and Historical Populations
+
 ## Skills Covered
 - UNIX navigation (Lab1)
 - Github (Lab1)
