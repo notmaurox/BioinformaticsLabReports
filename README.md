@@ -12,6 +12,8 @@ This repository contains lab reports written to summarize mini projects complete
 
 **Lab5:** Can Reading Ones Genome Provide Information On Who They Are: An Investigation of Eye Color Using GWAS and Mathematical Modeling.
 
+**Lab6:** See worksheet for some answers to questions about the lab. This week didn't include a formal report.
+
 ## Skills Covered
 - UNIX navigation (Lab1)
 - Github (Lab1)
@@ -36,4 +38,6 @@ This repository contains lab reports written to summarize mini projects complete
 - GWAS (Lab5)
 - plink (Lab5)
 - Trait prediction (Lab5)
+- Mass Spec analysis (Lab6)
+
 
