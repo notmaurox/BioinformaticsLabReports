@@ -58,18 +58,23 @@ pairwisePearson.sh was used to calculate Pearson correlation between TPM values 
 After identifying differentially expressed genes with the help of sleuth, 1943 significant transcripts were identified.  Using IGV, expression across tissues and replicates were analyzed. In the case of Shh (see figure 1), it was highly expressed in the mid brain, and less expressed in hind limb and fore limb. The same story was also true for the Uchl1 gene. Expression levels for Uchl1 are reported in figure 2. Although in this case, the difference in level of expression in fore limb vs hind limb was slightly larger. This was also the case for Sparcl1 expression as shown in figure 3.  The Ubl3 gene was expressed very similarly across all tissue types as shown in figure 4. Expression for Nom1 shown in figure 5 is one gene that had higher expression in hind limb and fore limb. 
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/ShhExpression.png)
+
 *Figure 1: Expression of Shh gene across all tissue types and replicates*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Uchl1Expression.png)
+
 *Figure 2: Expression of Uchl1 gene across all tissue types and replicates*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Sparcl1Expression.png)
+
 *Figure 3: Expression of Sparcl1 gene across all tissue types and replicates*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Ubl3Expression.png)
+
 *Figure 4: Expression of Ubl3 gene across all tissue types and replicates*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Nom1Expression.png)
+
 *Figure 5: Expression of Nom1 gene across all tissue types and replicates*
 
 
@@ -78,12 +83,15 @@ After identifying differentially expressed genes with the help of sleuth, 1943 s
 Figure 6 captures some of the highest H3K27Ac peaks in the data set, accompanied by H3K4me1 peaks. Across the 4 genes covered by this stretch that have high expression (Ppm1g, Zfp513, Snx17, Eif2b4), H3K27Ac and H3K4me1 peaks occurred at the beginning of them. Figure 7 shows Cenpa gene region where high expression is accompanied by H3K27Ac and H3K4me1 peaks at the beginning of the gene with H3K4me1 stretching into the introns. In the case of Dpysl5 gene shown in figure 8, mid brain tissue had higher levels of H3K27Ac and H3K4me1 than fore limb and hind limb tissues. Peaks started at the beginning of the gene stretching across intronic regions of the as well. In this case, the mid brain with higher histone modification peaks stretching for further distances than the hind and fore limbs has much greater levels of exon region expression. This highlights the correlation that regions of higher H3K27Ac and H3K4me1 abundance result in greater expression of genes immediately downstream from them, classifying H3K27Ac and H3K4me1 as enhancers. Peaks in the PhyloP track correspond to regions that are highly conserved across different species. For the most part, exonic regions have the highest peaks. In the case of the Shh gene, some intronic regions have peaks as high as the exonic ones. This may correspond to regulatory regions of other genes that are also highly conserved. 
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/fig6VariousGenes.png)
+
 *Figure 6: IGV window showing Ppm1g, Zfp513, Snx17, and Eif2b4 regions with expression and histone modification data in different tissue types*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Cenpa.png)
+
 *Figure 7: IGV window showing Cenpa gene region expression and histone modification data in different tissue types*
 
 ![alt text](https://github.com/cse185-sp18/cse185-week4-notmaurox/blob/master/labreport/Dpysl5.png)
+
 *Figure 8: IGV window showing Dpysl5 gene region expression and histone modification data in different tissue types*
 
 In IGV chr5:29,314,718-29,315,770 location (seen in figure 9) corresponds to Zone of polarizing activity regulatory sequence (ZRS) also known as MFCS1, a region known to regulate the Shh gene. This enhancer region had H3K4me1 peaks stretching across its area in all tissues. However, in mid brain the peak was very small. In terms of H3K27Ac, there were little to no peaks in mid brain tissue while hind limb and forelimb had slight peaks. Peaks remained at a relatively constant height across the region with no dramatic spikes. There was little histone appearance in mid brain but high Shh expression so these histones and ZRS region might have a smaller regulatory effect on mid brain cells. The moderate peaks in hind limb and fore limb were consistent with the moderate Shh expression in these tissue types. 
