@@ -16,6 +16,9 @@ This repository contains lab reports written to summarize mini projects complete
 
 **Lab7 / Independent Project:** Kakapo Mitogenome Analysis For SNP Identification: Investigating Potential Markers of Diversity Within Modern and Historical Populations
 
+## Tools Used
+FastQC, Sickle, BWA-MEM, Samtools, VarScan, WebDSV, JellyFish, SoapDenovo2, GapCloser, Minia, SSpace, Quast, STAR, Kallisto, Sleuth, Mafft, Plink, BLAST
+
 ## Skills Covered
 - UNIX navigation (Lab1)
 - Github (Lab1)
