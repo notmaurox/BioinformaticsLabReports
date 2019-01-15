@@ -14,7 +14,12 @@ Analysis began by collecting three files, amp_res_1.fastq and amp_res_2.fastq, a
 
 To filter the reads, Sickle[1] was used to trim them within a certain quality and length threshold. Sickle was run with default parameters and its output trimpair1.fastq and trimpair2.fastq were reassessed by fastqc. The trimmed reads no longer failed the quality score modules within the fastqc html files. 
 
-The trimmed reads (foreword and reverse) were aligned to reference genome NC_000913.3.fasta using BWA-MEM[2] and the output was redirected to a .sam file. This sam file was decoded by flagstat, a samtool utility [3]. Samtools was then utilized to compress and sort the sam file, creating an indexed bam file. This bam file was viewed using tview and mapped reads were compressed using mpileup, both utilities of samtools. The compressed file provided by mpileup was then used by VarScan[4] with a min var freq of 0.50 to create a .vcf file. An awk script as defined in the lab report and notebook helped trim unnecessary data and format columns of this .vcf file so that it could be uploaded to the online Variant Effect Predictor [5] (E. coli MG1655) to locate mutations in the genome and discover which genes they fell in. The awk script removed the first 24 lines and replaced the first cell of each row with keyword “Chromosome” and outputted the edited file to  a new one. VEP data was viewed online in the web browser used for submitting the processed .vcf file. 
+The trimmed reads (foreword and reverse) were aligned to reference genome NC_000913.3.fasta using BWA-MEM[2] and the output was redirected to a .sam file. This sam file was decoded by flagstat, a samtool utility [3]. Samtools was then utilized to compress and sort the sam file, creating an indexed bam file. This bam file was viewed using tview and mapped reads were compressed using mpileup, both utilities of samtools. The compressed file provided by mpileup was then used by VarScan[4] with a min var freq of 0.50 to create a .vcf file. An awk script as defined in the lab report and notebook helped trim unnecessary data and format columns of this .vcf file so that it could be uploaded to the online Variant Effect Predictor [5] (E. coli MG1655) to locate mutations in the genome and discover which genes they fell in. The awk script removed the first 24 lines and replaced the first cell of each row with keyword “Chromosome” and outputted the edited file to  a new one. 
+
+```
+awk '{if (NR>24) $1="Chromosome"; print}' VarScan.vcf > mymodVarScan.vcf
+```
+VEP data was viewed online in the web browser used for submitting the processed .vcf file. 
 
 ## Results
 
