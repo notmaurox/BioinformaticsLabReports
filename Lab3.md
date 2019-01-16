@@ -22,7 +22,14 @@ Once the four fastq files (frag_1.fastq, frag_2.fastq, short_jump_1.fastq, and s
 
 Low frequency k-mers were regarded as likely errors. To get rid of them, SOAPdenovo2[4] was used to scan for similar k-mers (few nucleotide differences) with higher frequency to be used in their correction.  KmerFreq_HA module was run with maximum k-mer size (27), -L flag set to 101 (maximum read length in data set) and –i flag set to 10000000 for both frag_1.fastq and frag_2.fastq. This provided a hash-table that contained the frequency of every k-mer in the data. Corrector_HA module was used with this hash table file with –k set to 27, -Q set to 33, -o set to 3 and –l set to 5, the previously identified valley point in k=31 histogram. Corrected fastq files were outputted with filetype .fastq.cor.pair_[1/2].fq. Jellyfish and IPython steps were repeated with the corrected frag_1 reads to generate a histogram of corrected k-mers. New valley point appeared at 2 and the first peak occurred at 14. 
 
-awkCommand1.txt was used to calculate the average read length. awkCommand2.txt was used to calculate the total number of bases in all the reads. The genome size was then estimated using the previously identified k-mer peak, k-mer size, average read length, and total bases. 
+awkCommand1.txt was used to calculate the average read length. 
+```
+awk 'NR%4==2{sum+=length($0)}END{print sum/(NR/4)}' input.fastq
+```
+awkCommand2.txt was used to calculate the total number of bases in all the reads. The genome size was then estimated using the previously identified k-mer peak, k-mer size, average read length, and total bases. 
+```
+awk 'NR%4==2{sum+=length($0)}END{print sum} infput.fastq
+```
 
 Assembly into contigs was completed using Minia [8] on the corrected read files with k mer size of 29. The class ran minia with kmer sizes ranging from 27 to 43 and resulting statistics were compared at a later point. Repeated Jellyfish analysis showed that first peak remained at 2 with kmer size set to 29 so –abundance-min flag was set to 3 because k-mers with abundance higher than those in valley point were to be used in assembly.  Output files with suffix .contigs.fa contained assembled contigs. Counting lines in the output file and dividing by 2 generated the number of contigs.  The longest and shortest length contigs were recovered using the two commands listed in awkCommand3.txt. QUAST [5] was used to gain some statistics on the contig assembly, skipping contigs shorter than 100, searching for prokaryotic genes, and leaving genome as unknown.
 
