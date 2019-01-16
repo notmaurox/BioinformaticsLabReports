@@ -14,14 +14,44 @@ This week involved the analysis of a flu virus sequence that was suspected to in
 This work involved the correction of next generation sequencing error that arose during the analysis procedure. During clonal amplification on Illumina sequencing chips, incorrect bases can be incorporated into sample sequence, resulting in substitution errors [7]. Because this lab involved scanning for rare variants, a data-filtering step was required to distinguish sequencing errors from real rare sequence variants. This involved sequencing the HA gene of three isogenic control samples of the standard flu genome, the reference genome mutated flu reads were mapped to. From here, any mutations detected in the control samples could be classified as sequencing errors and not true genetic variants. 
  
 ## Methods
-In this lab, the roommate.fastq file contained deep sequencing reads of the mixed population quasispecies flu virus that was able to infect someone who had previously received the flu vaccine, specifically its hemagglutinin gene. Files SRR1705858.fastq, SRR1705859.fastq, and SRR1705860.fastq where isogenic replicates of the standard flu (H3N2 influenza) virus used for the quality control step. In sequencing, at least 151 cycles were run because the longest read length was 151 bases. However, based on the information provided in lab alone, it is not possible to tell exactly how many cycles were run. Data was pre-processed because the received reads were aligned directly to reference genome and no trimming or per base quality scores analysis were required. Additionally, across all four samples, reads were reported at various lengths, which meant low quality bases had already been trimmed. The analysis of read lengths was done using awkCommand1.txt as included in the lab report folder. 
+In this lab, the roommate.fastq file contained deep sequencing reads of the mixed population quasispecies flu virus that was able to infect someone who had previously received the flu vaccine, specifically its hemagglutinin gene. Files SRR1705858.fastq, SRR1705859.fastq, and SRR1705860.fastq where isogenic replicates of the standard flu (H3N2 influenza) virus used for the quality control step. In sequencing, at least 151 cycles were run because the longest read length was 151 bases. However, based on the information provided in lab alone, it is not possible to tell exactly how many cycles were run. Data was pre-processed because the received reads were aligned directly to reference genome and no trimming or per base quality scores analysis were required. Additionally, across all four samples, reads were reported at various lengths, which meant low quality bases had already been trimmed. The analysis of read lengths was done using awkCommand1.txt as shown below.
+```
+cat roommate.fastq | awk 'NR%4==0 {print length}' | sort -n | uniq -c
+```
 
 The reference sequence for this analysis called for a standard H3N2 hemagglutinin gene.  EntrezDirect[5] was used to remotely download the sequence with id: KF848938.1 from the NCBI database using the efetch command and saved in .fasta file format.  Alignment was completed using BWA-MEM [1]. First the reference file was indexed. The alignment of roommate reads to the reference and compressing of SAM file into BAM file was completed by using bwa mem and piping the output into samtools[2] view utility and then sort utility, for all these steps default parameters were used. The resulting BAM file was then indexed using the samtools index utility. An mpileup file was created using the roommate BAM file and reference genome with –d parameter set to 1000000. This prevented samtools from ceasing piling up reads at a base after the default 8000 calls. It was important to change this parameter because otherwise, after reaching 8000 calls and stopping piling, a rare variant nucleotide could potentially be lost if it wasn’t in one of the first 8000 reads mapped to that position. 
 
-VarScan[3] was first used to identify variants with minimum frequency 0.95 and results were outputted in .vcf file format. This meant finding variants that were common across most of the quasispecies in the roommate sample. awkCommand2.txt was then used to pull the reference base, position, and mutant base from the VarScan output. Given these mutations, online sequence editor WebDSV[4] was used to view the reference genome. Mutations were recorded as which codon they altered, the resulting mutation type, and the change to the amino acid at that position in the translated protein. VarScan analysis was then repeated with a minimum variant frequency 0.001 to identify rare variants. The output of this analysis was then parsed useing awkCommand3.txt to pull mutation position, reference base, alternative base, and mutation frequency. 
+VarScan[3] was first used to identify variants with minimum frequency 0.95 and results were outputted in .vcf file format. This meant finding variants that were common across most of the quasispecies in the roommate sample. awkCommand2.txt was then used to pull the reference base, position, and mutant base from the VarScan output.
+```
+cat roommate.vcf | grep -v "^#" | awk '{if (NR>24); print $2, $4, $5}'
+```
+Given these mutations, online sequence editor WebDSV[4] was used to view the reference genome. Mutations were recorded as which codon they altered, the resulting mutation type, and the change to the amino acid at that position in the translated protein. VarScan analysis was then repeated with a minimum variant frequency 0.001 to identify rare variants. The output of this analysis was then parsed useing awkCommand3.txt to pull mutation position, reference base, alternative base, and mutation frequency. 
+```
+cat roommate_rare.vcf | grep -v "^#" | awk '{print $2, $4, $5, $10}' | awk -F '[ :]' '{print $1, $2, $3, $10}'
+```
 
-In order to confidently classify rare variants as true variants and not the result of sequencing errors, the three isogenic H3N2 sequence reads had to be put through the same analysis pipeline. This process was automated using UNIX scripts. pipelineAutomation1.txt completed the aligning of each isogenic sample to the reference, BAM file creation, BAM file indexing, and read piling up. pipelineAutomation2.txt ran VarScan and parsed the resulting output files for the data of interest, primarily location, reference base, alternate base, and frequency. 
-The exact same parameters were used here as for the analysis of the room mate sample in producing the rare variants.
+In order to confidently classify rare variants as true variants and not the result of sequencing errors, the three isogenic H3N2 sequence reads had to be put through the same analysis pipeline. This process was automated using UNIX scripts. pipelineAutomation1.txt completed the aligning of each isogenic sample to the reference, BAM file creation, BAM file indexing, and read piling up. 
+```
+for x in SRR1705858 SRR1705859 SRR1705860
+do
+ echo $x
+ echo "/home/linux/ieng6/cs185s/public/week2/$x.fastq"
+ echo "align"
+ bwa mem KF848938.1.fasta /home/linux/ieng6/cs185s/public/week2/$x.fastq | samtools view -S -b | samtools sort > $x.bam
+ echo "index"
+ samtools index $x.bam
+ samtools mpileup -d 1000000 -f KF848938.1.fasta $x.bam > $x.mpileup
+done
+```
+pipelineAutomation2.txt ran VarScan and parsed the resulting output files for the data of interest, primarily location, reference base, alternate base, and frequency. The exact same parameters were used here as for the analysis of the room mate sample in producing the rare variants.
+
+```
+for x in SRR1705858 SRR1705859 SRR1705860
+do
+ java -jar /home/linux/ieng6/cs185s/public/tools/VarScan.jar mpileup2snp $x.mpileup --min-var-freq 0.001 --variants --output-vcf 1 > $x.vcf
+ cat $x.vcf | grep -v "^#" | awk '{print $2, $4, $5, $10}' | awk -F '[ :]' '{print $1, $2, $3, $10}' > output$x.txt
+done
+```
 
 True variants were then separated from sequencing errors using statistical filtering. Of the rare variants identified from the three isogenic controls, the average variant frequency and standard deviation were calculated. From there, roommate rare variants that fell within 3 standard deviations from the average control variant frequencies were removed from variant pool. The remaining ones were studied using WebDSV to record the codon change and resulting amino acid change.  These mutations were then studied under the context of the Munoz et al paper to determine if they fell within epitope regions of hemeagglutinin. Rare variant frequency data across all four samples and the calculations done for them are contained within CSE185Lab2Data.xlsx.
 
